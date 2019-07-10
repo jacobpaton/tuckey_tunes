@@ -1,9 +1,13 @@
 // Load HTTP library
-var http = require("http");
+var http = require("http"), fs = require('fs');
+var credentials = require("./credentials");
 
 // Create HTTP server to handle responses
 http.createServer(function(request, response) {
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.write("Hello World");
-    response.end();
+    fs.readFile('public/index.html', function(err, data) {
+        response.writeHead(200, {"Content-Type": "text/html"});
+        response.write(data);
+        console.log(credentials);
+        response.end();
+    });
 }).listen(8888);
